@@ -1,0 +1,16 @@
+{
+  "name": "team-dashboard",
+  "version": "1.0.0",
+  "description": "Trello clone",
+  "main": "index.js",
+  "scripts": {
+    "start:server": "cd server && npm start",
+    "start:client": "cd client && npm start",
+    "start": "concurrently npm:start:*"
+  },
+  "author": "Daniel Cudnik",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^5.0.0"
+  }
+}
