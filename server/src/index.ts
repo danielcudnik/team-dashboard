@@ -1,7 +1,7 @@
-import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const app = express();
+import { App } from './App';
 
-app.listen(8080, () => {
-    console.log('Listening on port 8080');
-});
+const app = new App();
+app.start();
