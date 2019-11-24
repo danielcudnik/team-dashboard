@@ -2,14 +2,19 @@ import express, { Application } from 'express';
 import bodyParser from 'body-parser';
 
 import { DbConnectionCreator } from './database/DbConnectionCreator';
+import { defineRelations } from './database/decorators/defineRelations';
 
 import { User } from './database/models/User';
 import { Profile } from './database/models/Profile';
-import { defineRelations } from './database/decorators/sequelize';
 import { AppRouter } from './AppRouter';
 
 import './controllers/Auth';
-
+import { Activity } from './database/models/Activity';
+import { Dashboard } from './database/models/Dashboard';
+import { DashboardUser } from './database/models/DashboardUser';
+import { DashColumn } from './database/models/DashColumn';
+import { Item } from './database/models/Item';
+import { Permission } from './database/models/Permission';
 
 export class App {
     constructor() {}
@@ -33,7 +38,20 @@ export class App {
         app.use(bodyParser.json());
         app.use(AppRouter.getInstance());
 
-        defineRelations([User, Profile]);
+        defineRelations([
+            User,
+            Profile,
+            Activity,
+            Dashboard,
+            DashboardUser,
+            DashColumn,
+            Item,
+            Permission
+        ]);
+
+        const sequelize = DbConnectionCreator.getInstance();
+
+        await sequelize.sync({ force: true });
 
         app.listen(+PORT, () => console.log(`Server listen on port: ${PORT}`));
     }

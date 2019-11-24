@@ -1,6 +1,9 @@
 import { Model } from 'sequelize';
-import { Table, Id, Column, OneToMany } from '../decorators/sequelize';
+
+import { Table, Id, Column, HasOne, BelongsToMany } from '../decorators';
 import { Profile } from './Profile';
+import { Dashboard } from './Dashboard';
+import { DashboardUser } from './DashboardUser';
 
 @Table()
 export class User extends Model {
@@ -21,7 +24,7 @@ export class User extends Model {
     
     @Column()
     date!: Date;
-    
-    @OneToMany('Profile')
-    profiles!: Profile[];
+
+    @BelongsToMany(() => Dashboard, () => DashboardUser)
+    dashboards!: Dashboard[];
 }

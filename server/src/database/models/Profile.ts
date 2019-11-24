@@ -1,5 +1,7 @@
 import { Model } from 'sequelize';
-import { Table, Id, Column, ForeignKey } from '../decorators/sequelize';
+
+import { Table, Id, Column, ForeignKey, BelongsTo } from '../decorators';
+import { User } from './User';
 
 @Table()
 export class Profile extends Model {
@@ -15,6 +17,10 @@ export class Profile extends Model {
     @Column()
     address!: string;
 
-    @ForeignKey('User')
+    @ForeignKey(() => User)
+    @Column()
     userId!: string;
+    
+    @BelongsTo(() => User)
+    user!: User;
 }
