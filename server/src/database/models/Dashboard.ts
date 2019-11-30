@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
 
-import { Table, Id, Column, ForeignKey, HasMany, BelongsToMany, NotNull, Unique } from '../decorators';
+import { Table, Id, Column, ForeignKey, HasMany, BelongsToMany } from '../decorators';
 import { User } from './User';
 import { DashColumn } from './DashColumn';
 import { DashboardUser } from './DashboardUser';
@@ -10,9 +10,10 @@ export class Dashboard extends Model {
     @Id()
     id!: string;
     
-    @Column()
-    @Unique()
-    @NotNull()
+    @Column({
+        allowNull: false,
+        unique: true
+    })
     title!: string;
 
     @ForeignKey(() => User)

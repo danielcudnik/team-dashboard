@@ -1,7 +1,7 @@
 import { Model } from 'sequelize';
+import bcrypt from 'bcrypt';
 
-import { Table, Id, Column, HasOne, BelongsToMany } from '../decorators';
-import { Profile } from './Profile';
+import { Table, Id, Column, BelongsToMany } from '../decorators';
 import { Dashboard } from './Dashboard';
 import { DashboardUser } from './DashboardUser';
 
@@ -19,12 +19,20 @@ export class User extends Model {
     @Column()
     email!: string;
 
-    @Column()
+    @Column({ defaultValue: true })
     active!: boolean;
-    
+
     @Column()
     date!: Date;
 
-    @BelongsToMany(() => Dashboard, () => DashboardUser)
+    @BelongsToMany(
+        () => Dashboard,
+        () => DashboardUser
+    )
     dashboards!: Dashboard[];
+
+    async comparePassword(providedPassword: string) {
+        const password = this.password;
+        return await bcrypt.compare(providedPassword, password);
+    }
 }

@@ -1,13 +1,27 @@
 import 'reflect-metadata';
-
+import { DataType } from 'sequelize';
 import { DecoratorsMetadataKeys } from './DecoratorsMetadataKeys';
 
-export type PropertyDefinition = { [key: string]: {} };
+export enum DataTypesKeys {
+    String = 'STRING',
+    Number = 'INTEGER'
+}
+
+export interface ColumnOptions {
+    type?: DataType;
+    defaultValue?: string | number | boolean | Date;
+    allowNull?: boolean;
+    unique?: boolean | string;
+    primaryKey?: boolean;
+    autoIncrement?: boolean;
+    field?: string;
+    comment?: string;
+};
 
 export function setFieldDefinition(
     target: any,
     key: string,
-    propDefinition: PropertyDefinition
+    options: ColumnOptions
 ) {
     const propertiesDefinitions: { [key: string]: {} }[] =
         Reflect.getMetadata(
@@ -23,11 +37,11 @@ export function setFieldDefinition(
             propertiesDefinitions[propertyDefinitionIndex].definition;
         propertiesDefinitions[propertyDefinitionIndex] = {
             ...propertiesDefinitions[propertyDefinitionIndex],
-            definition: { ...propertyDefinition, ...propDefinition }
+            definition: { ...propertyDefinition, ...options }
         };
     } else {
         propertiesDefinitions.push({
-            definition: propDefinition,
+            definition: options,
             name: key
         });
     }
