@@ -1,8 +1,8 @@
 import { Model } from 'sequelize';
 
-import { Table, Id, Column, ForeignKey, HasMany, BelongsTo } from '../decorators';
-import { Item } from './Item';
-import { Dashboard } from './Dashboard';
+import { Table, Id, Column, ForeignKey, HasMany, BelongsTo } from '@sequelize-decorators';
+import { Task } from '../task/task.model';
+import { Dashboard } from '../dashboard.model';
 
 @Table()
 export class DashColumn extends Model {
@@ -19,6 +19,6 @@ export class DashColumn extends Model {
     @BelongsTo(() => Dashboard)
     dashboard!: Dashboard;
 
-    @HasMany(() => Item)
-    items!: Item[];
+    @HasMany(() => Task)
+    tasks!: Task[];
 }

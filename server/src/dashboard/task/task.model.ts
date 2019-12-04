@@ -1,11 +1,11 @@
 import { Model } from 'sequelize';
 
-import { Table, Id, Column, ForeignKey, HasMany, BelongsTo } from '../decorators';
-import { Activity } from './Activity';
-import { User } from './User';
+import { Table, Id, Column, ForeignKey, HasMany, BelongsTo } from '@sequelize-decorators';
+import { Activity } from '../activity/activity.model';
+import { User } from '../../user/user.model';
 
 @Table()
-export class Item extends Model {
+export class Task extends Model {
     @Id()
     id!: string;
 

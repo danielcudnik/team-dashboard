@@ -22,9 +22,6 @@ export class DbConnectionCreator {
                 port
             } = DbConnectionCreator.getEnvDatabaseOptions();
 
-            console.log('database');
-            console.log(database);
-
             DbConnectionCreator.sequelizeInstance = new Sequelize(database, user, password, {
                 host: host,
                 port: port,

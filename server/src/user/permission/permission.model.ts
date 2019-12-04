@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
 
-import { Table, Id, Column } from '../decorators';
+import { Table, Id, Column } from '@sequelize-decorators';
 
 @Table()
 export class Permission extends Model {

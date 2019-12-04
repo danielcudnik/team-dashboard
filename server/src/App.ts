@@ -2,19 +2,18 @@ import express, { Application } from 'express';
 import bodyParser from 'body-parser';
 
 import { DbConnectionCreator } from './database/DbConnectionCreator';
-import { defineRelations } from './database/decorators/defineRelations';
-
-import { User } from './database/models/User';
-import { Profile } from './database/models/Profile';
+import { defineRelations } from '@sequelize-decorators';
 import { AppRouter } from './AppRouter';
 
-import './controllers/Auth';
-import { Activity } from './database/models/Activity';
-import { Dashboard } from './database/models/Dashboard';
-import { DashboardUser } from './database/models/DashboardUser';
-import { DashColumn } from './database/models/DashColumn';
-import { Item } from './database/models/Item';
-import { Permission } from './database/models/Permission';
+import './auth/auth.controller';
+import { User } from './user/user.model';
+import { Profile } from './user/profile/profile.model';
+import { Activity } from './dashboard/activity/activity.model';
+import { Dashboard } from './dashboard/dashboard.model';
+import { DashboardUser } from './dashboard/dashboard-user/dashboard-user.model';
+import { DashColumn } from './dashboard/dashboard-column/dashboard-column.model';
+import { Task } from './dashboard/task/task.model';
+import { Permission } from './user/permission/permission.model';
 
 export class App {
     constructor() {}
@@ -45,7 +44,7 @@ export class App {
             Dashboard,
             DashboardUser,
             DashColumn,
-            Item,
+            Task,
             Permission
         ]);
 

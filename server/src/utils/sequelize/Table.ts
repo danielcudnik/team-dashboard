@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
 import { DataTypes, STRING } from 'sequelize';
-import { DbConnectionCreator } from '../DbConnectionCreator';
+import { DbConnectionCreator } from '../../database/DbConnectionCreator';
 import { DecoratorsMetadataKeys } from './DecoratorsMetadataKeys';
 
 export function Table() {

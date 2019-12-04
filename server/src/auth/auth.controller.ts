@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { Controller, Get, Post, BodyValidator, Use } from './decorators';
 import { hash } from 'bcrypt';
 
-import { User } from '../database/models/User';
 import { validationMiddleware } from '../middleware/validation.middleware';
-import { CreateUserDto } from '../dtos/User/CreateUserDto';
+import { Controller, Post, BodyValidator, Use } from '@express-decorators';
+import { CreateUserDto } from '../user/dtos/create-user.dto';
+import { User } from '../user/user.model';
 
 @Controller('/auth')
 class AuthController {

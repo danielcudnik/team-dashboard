@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
-import { Table, Id, Column, ForeignKey } from '../decorators';
-import { User } from './User';
+import { Table, Id, Column, ForeignKey } from '@sequelize-decorators';
+import { User } from '../../user/user.model';
 
 
 @Table()

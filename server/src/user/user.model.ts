@@ -1,9 +1,9 @@
 import { Model } from 'sequelize';
 import bcrypt from 'bcrypt';
 
-import { Table, Id, Column, BelongsToMany } from '../decorators';
-import { Dashboard } from './Dashboard';
-import { DashboardUser } from './DashboardUser';
+import { Table, Id, Column, BelongsToMany } from '@sequelize-decorators';
+import { Dashboard } from '../dashboard/dashboard.model';
+import { DashboardUser } from '../dashboard/dashboard-user/dashboard-user.model';
 
 @Table()
 export class User extends Model {
