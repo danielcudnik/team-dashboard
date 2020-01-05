@@ -3,6 +3,7 @@ import { AppRouter } from '../../AppRouter';
 import { Methods } from './Methods';
 import { MetadataKeys } from './MetadataKeys';
 import { RequestHandler, NextFunction, Request, Response } from 'express';
+import { CustomResponse } from './CustomResponse';
 
 function bodyValidators(keys: string[]): RequestHandler {
     return function(req: Request, res: Response, next: NextFunction) {
@@ -52,14 +53,41 @@ export function Controller(routePrefix: string) {
 
             const validator = bodyValidators(requiredBodyProps);
 
+            const wrappedRouteHandler = catchError(routeHandler);
+
             if (path) {
                 router[method](
                     `${routePrefix}${path}`,
                     ...middlewares,
                     validator,
-                    routeHandler
+                    wrappedRouteHandler
                 );
             }
+        }
+    };
+}
+
+
+function catchError(
+    controllerMethod: (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) => Promise<CustomResponse>
+) {
+    return async function(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<void> {
+        try {
+            const {
+                status = 200,
+                ...response
+            }: CustomResponse = await controllerMethod(req, res, next);
+            res.status(status).json({ ...response });
+        } catch (error) {
+            next(error);
         }
     };
 }

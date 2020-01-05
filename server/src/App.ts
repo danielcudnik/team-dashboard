@@ -2,18 +2,12 @@ import express, { Application } from 'express';
 import bodyParser from 'body-parser';
 
 import { DbConnectionCreator } from './database/DbConnectionCreator';
-import { defineRelations } from '@sequelize-decorators';
+import { registerDatabase } from 'database/register-database';
 import { AppRouter } from './AppRouter';
+import { errorMiddleware } from 'middleware/error.middleware';
 
 import './auth/auth.controller';
-import { User } from './user/user.model';
-import { Profile } from './user/profile/profile.model';
-import { Activity } from './dashboard/activity/activity.model';
-import { Dashboard } from './dashboard/dashboard.model';
-import { DashboardUser } from './dashboard/dashboard-user/dashboard-user.model';
-import { DashColumn } from './dashboard/dashboard-column/dashboard-column.model';
-import { Task } from './dashboard/task/task.model';
-import { Permission } from './user/permission/permission.model';
+
 
 export class App {
     constructor() {}
@@ -36,21 +30,9 @@ export class App {
 
         app.use(bodyParser.json());
         app.use(AppRouter.getInstance());
+        app.use(errorMiddleware);
 
-        defineRelations([
-            User,
-            Profile,
-            Activity,
-            Dashboard,
-            DashboardUser,
-            DashColumn,
-            Task,
-            Permission
-        ]);
-
-        const sequelize = DbConnectionCreator.getInstance();
-
-        await sequelize.sync({ force: true });
+        registerDatabase(false);
 
         app.listen(+PORT, () => console.log(`Server listen on port: ${PORT}`));
     }
