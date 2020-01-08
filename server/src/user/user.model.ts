@@ -4,6 +4,8 @@ import bcrypt from 'bcrypt';
 import { Table, Id, Column, BelongsToMany } from '@sequelize-decorators';
 import { Dashboard } from '../dashboard/dashboard.model';
 import { DashboardUser } from '../dashboard/dashboard-user/dashboard-user.model';
+import { Permission } from './permission/permission.model';
+import { UserPermission } from './user-permission/user-permission.model';
 
 @Table()
 export class User extends Model {
@@ -30,6 +32,14 @@ export class User extends Model {
         () => DashboardUser
     )
     dashboards!: Dashboard[];
+
+    @BelongsToMany(
+        () => Permission,
+        () => UserPermission
+    )
+    permissions!: Permission[];
+
+    addPermission!: (permission: Permission) => {};
 
     async comparePassword(providedPassword: string) {
         const password = this.password;

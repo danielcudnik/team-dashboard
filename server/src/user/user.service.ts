@@ -41,10 +41,7 @@ export class UserService {
         if (password !== repeatedPassword) {
             throw new HttpException(409, 'Passwords not match!');
         }
-
         const existingUser = await this.findOne({ where: { email: email } });
-        console.log('existingUser');
-        console.log(existingUser);
 
         if (existingUser) {
             throw new HttpException(409, 'User with provided email exist!');
@@ -59,8 +56,6 @@ export class UserService {
                 password: hashedPassword
             });
         } catch (error) {
-            console.log('ERROR');
-            console.log(error);
             throw new HttpException(500, 'Something went wrong!');
         }
     }
