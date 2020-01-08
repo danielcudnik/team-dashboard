@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';  
 
 import { DbConnectionCreator } from './database/DbConnectionCreator';
 import { registerDatabase } from 'database/register-database';
@@ -7,6 +8,8 @@ import { AppRouter } from './AppRouter';
 import { errorMiddleware } from 'middleware/error.middleware';
 
 import './auth/auth.controller';
+import './user/user.controller';
+import { corsMiddleware } from 'middleware/cors.middleware';
 
 
 export class App {
@@ -29,6 +32,8 @@ export class App {
         const PORT = process.env.PORT || 8080;
 
         app.use(bodyParser.json());
+        app.use(corsMiddleware);
+        app.use(cookieParser());
         app.use(AppRouter.getInstance());
         app.use(errorMiddleware);
 
